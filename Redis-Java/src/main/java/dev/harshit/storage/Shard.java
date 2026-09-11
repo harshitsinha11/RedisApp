@@ -14,4 +14,12 @@ public final class Shard {
     public void set(String key,Entry value){
         map.put(key, value);
     }
+
+    public void remove(String key,Entry value){
+        map.remove(key,value);
+    }
+
+    public void remove(String key){
+        map.remove(key);
+    }
 }

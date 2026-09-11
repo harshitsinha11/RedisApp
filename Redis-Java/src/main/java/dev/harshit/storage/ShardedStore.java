@@ -39,6 +39,18 @@ public class ShardedStore {
         getShard(key).set(key,entry);
     }
 
+    //We need to check which of these perform better
+
+    //This one will have overhead of checking entry matches or not
+    public void removeValue(String key, Entry entry) {
+        getShard(key).remove(key, entry);
+    }
+
+    //This one may lead to race condition
+    public void removeValue(String key) {
+        getShard(key).remove(key);
+    }
+
     //Exposing shards
     //ExpirationCleaner will need its access
     public Shard[] getShards(){
