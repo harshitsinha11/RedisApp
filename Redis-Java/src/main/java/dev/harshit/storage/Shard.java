@@ -1,0 +1,17 @@
+package dev.harshit.storage;
+
+import dev.harshit.core.Entry;
+
+import java.util.concurrent.ConcurrentHashMap;
+
+public final class Shard {
+    private final ConcurrentHashMap<String, Entry> map = new ConcurrentHashMap<>();
+
+    public Entry get(String key){
+        return map.get(key);
+    }
+
+    public void set(String key,Entry value){
+        map.put(key, value);
+    }
+}
