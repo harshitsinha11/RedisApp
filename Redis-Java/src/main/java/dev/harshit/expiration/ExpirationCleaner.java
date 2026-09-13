@@ -10,13 +10,14 @@ import java.util.Map;
 public class ExpirationCleaner implements Runnable{
 
     private final ShardedStore shards;
-    private final long intervalMs = 1000; //Wait time before cleaner starts again
+    private final long intervalMs; //Wait time before cleaner starts again
 
     private volatile boolean running = true;
 
 
-    public ExpirationCleaner(ShardedStore shards) {
+    public ExpirationCleaner(ShardedStore shards, long intervalMs) {
         this.shards = shards;
+        this.intervalMs = intervalMs;
     }
 
     @Override
