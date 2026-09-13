@@ -36,8 +36,10 @@ public class ConnectionHandler implements Runnable{
 
                 String res = execute(cmd);
 
+//                System.out.println("Sending response: [" + res + "]");
+
                 output.write(
-                        (res+"/r/n").getBytes(StandardCharsets.UTF_8)
+                        (res+"\r\n").getBytes(StandardCharsets.UTF_8)
                 );
 
                 output.flush();
@@ -59,12 +61,12 @@ public class ConnectionHandler implements Runnable{
 
             case "TTL" -> handleTtl(cmd);
 
-            default -> "ERR Unknown Command";
+            default -> "ERROR unknown command";
         };
     }
 
     private String handleGet(String[] cmd) {
-        if(cmd.length != 2) return "ERR wrong number of arguments GET";
+        if(cmd.length != 2) return "ERROR wrong number of arguments GET";
 
         String value = engine.get(cmd[1]);
 
@@ -91,7 +93,7 @@ public class ConnectionHandler implements Runnable{
             }
         } else{
 
-            return "ERR wrong number of arguments SET";
+            return "ERROR wrong number of arguments SET";
         }
     }
 
