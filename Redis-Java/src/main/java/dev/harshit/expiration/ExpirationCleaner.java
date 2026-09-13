@@ -9,14 +9,16 @@ import java.util.Map;
 
 public class ExpirationCleaner implements Runnable{
 
-    private final ShardedStore shards;
+    private final ShardedStore store;
     private final long intervalMs; //Wait time before cleaner starts again
 
     private volatile boolean running = true;
 
 
     public ExpirationCleaner(ShardedStore shards, long intervalMs) {
-        this.shards = shards;
+        if(intervalMs < 0) throw new RuntimeException("Cleaner interval < 0");
+
+        this.store = shards;
         this.intervalMs = intervalMs;
     }
 
@@ -36,8 +38,8 @@ public class ExpirationCleaner implements Runnable{
     }
 
     private void cleanExpiredEntries(){
-        //Iterate through all the shards
-        for(Shard shard : shards.getShards()){
+        //Iterate through all the store
+        for(Shard shard : store.getShards()){
 
             //Iterate through all the key-value pairs per shard(map)
             for(Map.Entry<String,Entry> entry : shard.entries()){
