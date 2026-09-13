@@ -66,4 +66,8 @@ public final class RedisEngine implements Redis {
         //Works similar to Math.ciel
         return (remainingNanos + 999_999_999L) / 1_000_000_000L;
     }
+
+    public ShardedStore getStore() {
+        return store;
+    }
 }
